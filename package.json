@@ -1,0 +1,52 @@
+{
+  "name": "cypress-cucumber-typescript-v2",
+  "version": "1.0.0",
+  "description": "> Cypress 10+ with Cucumber Type Script.",
+  "main": "cucumber-html-report.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cypress:runner": "cypress open",
+    "cypress:execution": "cypress run",
+    "test:smoke": "cypress run --env TAGS='@smoke'"
+
+  },
+  "keywords": [
+    "cypress"
+  ],
+  "bin": {
+  },
+  "author": "",
+  "license": "ISC",
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": false,
+    "step_definitions": "cypress/e2e/step_definitions/",
+    "cucumberJson": {
+      "generate": true,
+      "outputFolder": "cypress/cucumberJson",
+      "filePrefix": "",
+      "fileSuffix": ".cucumber"
+    }
+  },
+  "devDependencies": {
+    "@testing-library/cypress": "^10.0.1",
+    "@types/cypress-cucumber-preprocessor": "^4.0.1",
+    "client-oauth2": "^4.3.3",
+    "cypress": "^13.7.1",
+    "cypress-cucumber-preprocessor": "^4.3.1",
+    "cypress-ntlm-auth": "^4.0.5",
+    "cypress-otp": "^1.0.3",
+    "cypress-xpath": "^2.0.1",
+    "esbuild": "^0.14.48",
+    "js-yaml": "^4.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "luca": "^2.0.0",
+    "multiple-cucumber-html-reporter": "^2.0.0",
+    "node-ts": "^5.1.2",
+    "ntlm-auth": "^0.1.3",
+    "typescript": "^4.8.3"
+  },
+  "dependencies": {
+    "moment": "^2.29.4",
+    "otplib": "^12.0.1"
+  }
+}

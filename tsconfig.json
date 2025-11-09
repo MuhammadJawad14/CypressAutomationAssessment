@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    // "paths": {"*":["types/*"]},
+    // "paths": {"$lib/*": ["src/lib/*"]},
+    "target": "ES2017",
+    "module": "CommonJS",
+    "types": ["node", "cypress", "@testing-library/cypress"],
+    
+    "lib": ["dom", "ES2021"],
+    
+  },
+  "include": ["**/*.ts"]
+}

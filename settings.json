@@ -1,0 +1,7 @@
+{
+    "gherkin-autocomplete.featuresPath": "features",
+    "cucumberautocomplete.syncfeatures": "features/*feature",
+    "cucumberautocomplete.steps": [
+        "cypress/e2e/step_definitions/*/*ts"
+    ]
+}
