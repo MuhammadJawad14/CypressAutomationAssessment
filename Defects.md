@@ -1,7 +1,6 @@
 # 🐞 Defects Report (Compressed)
 
 | ID       | Severity | Title                                    | Environment | Preconditions | Steps to Reproduce | Expected Result | Actual Result | Notes         |
-|          |          |                                          |             |               |                    |                 |               |               |
 | DEF-001  | Critical | Tenant isolation missing on board update | Chrome / Windows | Board belongs to another tenant | Attempt to PATCH board name | Action should be blocked with 403      | Update succeeds (200) | Cross-tenant security breach |
 
 | DEF-002  | Major    | Drag-drop not working in Safari | Safari / macOS | Board with card in two columns | Drag card between columns | Card moves correctly | Drop event not triggered   | Safari drag-drop implementation issue |
