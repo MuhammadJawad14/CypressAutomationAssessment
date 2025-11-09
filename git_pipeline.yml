@@ -1,0 +1,131 @@
+
+# Th
+name: QA Pipeline - Boards Module Tests
+
+on:
+  pull_request:
+    branches:
+      - Develop
+
+jobs:
+  # 1. SETUP: Installs all dependencies for subsequent jobs
+  setup:
+    name: ⚙️ Setup Environment
+    runs-on: ubuntu-latest
+    # Define outputs to be reused by other jobs (e.g., node path)
+    outputs:
+      node-cache-key: ${{ steps.cache-key.outputs.cache-key }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Get npm cache key
+        id: cache-key
+        run: echo "cache-key=$(npm ci --no-audit --ignore-scripts --dry-run)" >> $GITHUB_OUTPUT
+
+      - name: Install dependencies (shared)
+        run: npm ci
+
+      - name: Install Cypress
+        run:  npm install --save-dev cypress
+
+  # 2. UI/E2E TESTS
+  e2e_ui_tests:
+    name: 🖥️ UI / E2E Automation
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node & Cache (Reuse from Setup Job)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json' # To link the setup cache
+
+      # Assumes `npm run test:e2e:ci` or similar runs the E2E suite
+      - name: Run E2E Tests (Cypress)
+        run: npx cypress  run --browser chrome
+        env:
+          # Assumed: Base URL for the running application
+          BASE_URL: ${{ secrets.STAGING_URL }} 
+        continue-on-error: false
+
+      - name: Archive E2E Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: Cucumber-report
+          path: Cucumber-html-report.js
+
+  # 3. API TESTS (Part C.1)
+  api_tests:
+    name: 🌐 API / Postman Collection
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node & Cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
+
+      - name: Install Newman & HTML Reporter
+        run: npm install -g newman newman-reporter-html
+
+      # Assuming BoardsModuleAPIValidation.postman_collection.json is in the repo root
+      - name: Run Boards Postman Collection
+        run: newman run BoardsModuleAPIValidation.postman_collection.json -e Boards.env.json --reporters cli,html --reporter-html-export newman/api-report.html
+        env:
+          # Pass API key or secret if needed for environment
+          API_SECRET: ${{ secrets.API_SECRET }}
+
+      - name: Archive API Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-newman-report
+          path: newman/
+
+  # 4. BONUS Checks (a11y/Security Smoke)
+  bonus_checks:
+    name: ✨ Bonus Smoke Checks
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node & Cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
+
+      - name: Run Accessibility Audit
+        # Assumes a dedicated a11y spec file exists
+        run: npx cypress test tests/a11y_smoke.spec.ts --reporter=list
+        continue-on-error: true # Allow PR to merge, but report failure
+
+      - name: Run Security Checks (Header/Cookie Smoke)
+        # Assuming a dedicated script verifies HttpOnly, CORS, etc.
+        run: node scripts/security_smoke.js
+
+      - name: Archive Bonus Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: bonus-reports
+          path: |
+            cypress-report
+            reports/security
