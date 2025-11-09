@@ -3,7 +3,6 @@
 ### Traceability Matrix — Compressed Format
 
 | AC    | Requirement                                  | Manual Tests           | Automation Test                           | Status |
-|       |                                              |                        |                                           |        |
 | AC-1  | Remember Me session persistence              | TC-AUTH-001/002        | auth_persistence.spec.ts                  | Pass   |
 | AC-2  | Tenant data isolation                        | TC-TENANT-001/002      | Postman: tenant_isolation_tests           | Pass   |
 | AC-3a | RBAC: Admin full CRUD                        | TC-RBAC-001/002        | rbac_admin_permissions.spec.ts            | Pass   |
