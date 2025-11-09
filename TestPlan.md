@@ -8,7 +8,6 @@ The purpose of this test plan is to define the Quality Assurance strategy for va
 
 ### In Scope
 | Feature Area               | Acceptance Criteria                                                    | Validation Method                                           |
-|                            |                                                                        |                                                             |
 | Authentication & Session   | Login with email/password; Remember Me keeps session for 7 days        | UI login flow and session token persistence checks          |
 | Multi Tenant Isolation     | User can only access data within their own tenant                      | API negative tests with cross-tenant tokens + UI validation |
 | RBAC                       | Admin: full CRUD; Member: CRUD own only; Viewer: read only             | UI role state checks and API negative permission tests      |
@@ -28,7 +27,6 @@ The purpose of this test plan is to define the Quality Assurance strategy for va
 ### Risks and Mitigation
 
 | Risk Area                   | Impact                          | Sev | Mitigation                                                    |
-|                             |                                 |     |                                                               |
 | Tenant isolation failure    | Data visible across tenants     | P1  | Assert tenantId filtering in all API read/write operations    |
 | RBAC bypass                 | Unauthorized actions possible   | P1  | UI role checks + API negative tests expecting 403 responses   |
 | Session persistence issues  | Session lost or stored insecure | P2  | Validate token expiry + storage; verify Remember Me behavior  |
@@ -39,7 +37,6 @@ The purpose of this test plan is to define the Quality Assurance strategy for va
 ## 4. Test Levels and Tools
       
 | Test Level                        | Tool or Framework        | Purpose                                                                      |
-|                                   |                          |                                                                              |
 | Manual Functional and Exploratory | Browser Developer Tools  | Workflow validation, behavior checks, and risk discovery                     |
 | UI End to End Automation          | Cypress                  | Stable regression coverage and CI ready test execution                       |
 | API Testing                       | Postman or Newman        | Response schema validation, negative tests, RBAC and tenant isolation checks |
@@ -61,7 +58,6 @@ The purpose of this test plan is to define the Quality Assurance strategy for va
 ## 6. Test Execution Strategy
 
 | Suite Name             | Focus                                                                                     | Execution Frequency                       |
-|                        |                                                                                           |                                           |
 | Smoke Suite            | Login, board creation, card creation, move card, RBAC restriction, tenant isolation check | On every new build or pull request        |
 | Full Regression Suite  | Complete functional, negative, and boundary coverage                                      | Before each release cycle                 |
 | Cross Browser Suite    | Safari and Mobile smoke coverage                                                          | Weekly or pre-release                     |
