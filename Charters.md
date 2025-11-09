@@ -3,7 +3,6 @@
 ## Charter 1: Validate Tenant Isolation & RBAC Across Boards & Cards
 
 | Attribute            | Detail                                                                                                                     |
-|                      |                                                                                                                            |
 | **Goal**             | Stress-test multi-tenant boundaries and RBAC to ensure proper data segregation, permission enforcement, and audit logging. |
 | **Actors**           | Admin (Tenant A), Member (Tenant A), Viewer (Tenant B)                                                                     |
 | **Duration**         | 60–75 minutes                                                                                                              |
@@ -19,7 +18,6 @@
 ## Charter 2: Cross-Browser Sanity: Create/Rename/Archive Board; Drag-Drop Card
 
 | Attribute           | Detail |
-|                     |        |
 | **Goal**            | Verify core user workflows function correctly across required browsers (Chrome, Firefox, Safari) and mobile browsers (Chrome/Safari), including complex UI interactions like drag-and-drop and touch gestures. |
 
 | **Actors**          | Member (Tenant A) |
@@ -35,7 +33,6 @@
 ## Charter 3 (Optional / Bonus): Audit & Performance Smoke Exploration
 
 | Attribute           | Detail                                                                                                                  |
-|                     |                                                                                                                         |
 | **Goal**            | Explore backend and front-end logging, system performance under small-scale load, and audit consistency.                |
 | **Actors**          | Admin, Member                                                                                                           |
 | **Duration**        | 30–45 minutes                                                                                                           |
